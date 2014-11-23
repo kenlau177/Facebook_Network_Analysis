@@ -1,0 +1,61 @@
+---
+title: "Coursera SNA Peer-Eval Project"
+author: "Ken Lau"
+date: "Sunday, November 23, 2014"
+output: 
+  html_document:
+    keep_md: yes
+    toc: true
+  pdf_document: default
+bibliography: bibfile.bib
+---
+
+## Introduction
+This project is an extension of the analysis of my facebook ego network as worked on in class. In addition to the in-depth analysis of the personal network, I also carried out an analysis between a few anomalyzed ego networks.
+
+## Obtaining Data
+### Documentation
+My personal facebook ego network data is obtained through the [Getnet](http://snacourse.com/getnet/?code=AQCIKpB2S0cmHie-fp2DgMK0I-WjziwLMG50WC8jEkqU56gNk5h4RlvFWz2RKRm0-dHvYK0ixVf86oomggtWkoGIF3yKRtkn5UGMZ3ZSqaSMZYhcAmV5TkubcYYEIoOUbKbCtJkHK82cph9KOHz-GaL6E99J3FY2oxuF6ifK1b_mnAhcFOwNEF8A77XdeYcZWdoUWLVUNzezrXHuCwSj1IJ6mNb36nRUQlX4dbV-7h6gHkeFr5wEoQaHKFl9rdVNA-o7RB3ZAfpT1fACT4WEviFQ3H26mwAgc-lSqHB-2rvCVxykLRPi9EU-yC53VIw0G2o&state=097fd3530d754add30b79bab5331e3e6#_=_) app with instructions posted in [assignment 1](https://class.coursera.org/sna-004/assignment/view?assignment_id=2) of the SNA class. The data is downloaded in .gml format. 
+
+- [Project Repository](https://github.com/kenlau177/Coursera_SNA_FB)
+- [personal ego network in .gml](https://raw.githubusercontent.com/kenlau177/Coursera_SNA_FB/master/facebook_with_relation.gml)
+- [stanford ego networks in .gml](https://github.com/kenlau177/Coursera_SNA_FB/tree/master/facebook_stanford)
+
+The other anomalyzed data sets were obtained from [Stanford's](http://snap.stanford.edu/data/egonets-Facebook.html) collection of social network data. There are 10 anomalyzed ego network data in total. We make use of these by comparing the properties with my personal network [@stanford_ego].
+
+### Explanation of Criteria for Including Nodes and Edges
+The nodes represent the friends from the corresponding individual's facebook ego network data. The edges represent the mutual friend relationships. I believe there may have been some munging/filtering of data in the stanford ego networks.
+
+### Subjective interestingness/originality of the subject of data collection
+In addition to the raw data from my facebook ego network, I've manually inserted "test" labels of how I met each of my individual friends in my network. Part of the goal of this project is to see whether different community detection algorithms could pick up the correct clusters corresponding to how I've met them in person. For example, from playing Ultimate Frisbee, high school, UBC stats department, etc.
+
+In addition, the idea of including additional ego network data came from Dr. Lada Adamic's reply in this [thread](https://class.coursera.org/sna-004/forum/thread?thread_id=357). Therefore, the ensemble of ego network is usually of interest also.
+
+## Data Analysis
+
+### Stats on Personal Network
+The following step-by-step code makes use of some [helper functions]() created to generate statistics. It is not included here to minimize visual clutter. 
+
+
+**Load in the following packages**
+```{r, message=F}
+library(igraph)
+library(RColorBrewer)
+library(plyr)
+library(dplyr)
+```
+
+
+
+
+
+
+
+
+
+
+## References
+
+
+
+
