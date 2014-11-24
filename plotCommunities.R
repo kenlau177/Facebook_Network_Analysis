@@ -84,8 +84,29 @@ plot(erdo, layout=layout, vertex.size=log(betweenness(erdo) + 1),
       invisible))
 dev.off()
 
-
-
+plotStanfComm = function(egoStanfordFile, algo){
+  egoS = read.graph(egoStanfordFile, directed=F)
+  egoS = simplify(egoS, remove.multiple=T, remove.loops=T)
+  if(algo == "mc"){
+    algoCluster = fastgreedy.community(egoS)
+  } else if(algo == "wtc"){
+    algoCluster = walktrap.community(egoS)
+  }
+  egoSstr = sub("\\.edges", "", basename(egoStanfordFile))
+  outf = paste0("stanford-", egoSstr, "-ego_", algo, ".png")
+  png(file=outf)
+  opar = par()$mar; par(mar=rep(0,4));
+  layout <- layout.fruchterman.reingold(egoS, niter=500, 
+              area=vcount(egoS)^2.3, repulserad=vcount(egoS)^2.8)
+  plot(egoS, layout=layout, vertex.size=log(betweenness(egoS) + 1), 
+    vertex.label=NA, 
+    mark.groups=by(seq_along(algoCluster$membership), algoCluster$membership, 
+      invisible))
+  dev.off()
+}
+egoStanfordFiles = list.files("facebook_stanford", "edges", full.names=T)
+l_ply(egoStanfordFiles, .fun=plotStanfComm, algo="mc")
+l_ply(egoStanfordFiles, .fun=plotStanfComm, algo="wtc")
 
 
 

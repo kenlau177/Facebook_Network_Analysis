@@ -173,7 +173,7 @@ title("Erdos-Renyi Random Graph")
 ```
 
 ##### Community Detection
-We'll try 2 different community detection algorithms: modularity and walk-trap. Modularity algorithm considers edges that fall within a community or between a community and the rest of the network. Walk-trap algorithm find communities through random walks. The idea behind walk-trap is that short random walks tend to stay in the same community.
+We'll try 2 different community detection algorithms: modularity and walk-trap. Modularity algorithm considers edges that fall within a community or between a community and the rest of the network. Walk-trap algorithm find communities through random walks. The idea behind walk-trap is that short random walks tend to stay in the same community. (This will count towards having tried out a method not introduced in class)
 
 **Execute community finding algorithms for personal network and erdos-renyi graphs**
 ```{r}
@@ -184,16 +184,188 @@ wtc = walktrap.community(G, steps=4)
 wtcErdo = walktrap.community(erdo, steps=4)
 ```
 
-Plotting details are omitted here, but the code can be found in [plotCommunites]()
+Plotting details are omitted here, but the code can be found in [plotCommunites.R](https://github.com/kenlau177/Coursera_SNA_FB/blob/master/plotCommunities.R)
 
+**Modularity score community finding algorithm**
+<table class='container'>
+<td>
+<p>My Ego Network</p>
+<img src="my-ego_mc.png" width="400" height="250">
+</td>
+<td>
+<p>Erdos-Renyi</p>
+<img src="erdo_mc.png" width="400" height="250">
+</td>
+</table>
 
+**Walk-trap community finding algorithm**
+<table class='container'>
+<td>
+<p>My Ego Network</p>
+<img src="my-ego_wtc.png" width="400" height="250">
+</td>
+<td>
+<p>Erdos-Renyi</p>
+<img src="erdo_wtc.png" width="400" height="250">
+</td>
+</table>
 
+**Interpretation**
+The erdos-renyi graph does not exhibit any interesting communities after performing the modularity and walk-trap algorithms. However, the ego network definitely has out some interesting communities. In particular the walk-trap algorithm detected the cluster people in the ego network that plays ultimate. Moreover, it grouped together my closest friends with the people who I met at a ubc event. It found the group of people I worked at toys-r-us. It trivially detected my relatives, since they have no connection with any other person in the graph.
 
+### Stats Including Stanford Anomalyzed Ego Networks
 
+#### Graph Stats
+```{r}
+# compute graph statistics similarly as for my ego network
+getGraphStatsEgoS = function(egoStanfordFile){
+  egoS = read.graph(egoStanfordFile, directed=F)
+  egoS = simplify(egoS, remove.multiple=T, remove.loops=T)
+  egoSstr = sub("\\.edges", "", basename(egoStanfordFile))
+  out = data.frame("network"=paste0("stanford-ego_",egoSstr), 
+          as.data.frame(computeGraphStats(egoS)))
+  return(out)
+}
+# find stanford anomalyzed ego networks
+egoStanfordFiles = list.files("facebook_stanford", "edges", full.names=T)
+graphStatsDf = ldply(egoStanfordFiles, .fun=getGraphStatsEgoS)
+# combine the graph stats information in a dataframe
+temp = rbind(as.data.frame(c("network"="my-ego_network", outGraphStats)), 
+        as.data.frame(c("network"="erdo_network", gsErdo)))
+graphStatsDf = rbind(temp, graphStatsDf)
+graphStatsDf = graphStatsDf %>% arrange(desc(transitivity))
+```
+```{r, results="asis", echo=F}
+print(xtable(graphStatsDf), comment=F, type="html", include.rownames=F)
+```
+<br></br>
+**Interpretation**
+The table was arranged with respect to the transitivity, also known as clustering coefficient. It turns out that my ego network is third highest in terms of transivity. All the ego networks had much higher transitivity levels than the erdos-renyi random graph. Similary, the average shortest path is also all greater than the random graph. In terms of average shortest path and transitivity, my ego network fit right in with the stanford samples.
 
+#### Community Comparisons and Visualizations
+Community structure finding is carried out on the 8 sample ego network from the stanford database. We used both the modularity score and walk-trap algorithm. The figures are shown below.
 
+**Modularity score community finding algorithm**
+<table class='container'>
+<td>
+<p>My Ego Network</p>
+<img src="my-ego_mc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-0-ego_mc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-107-ego_mc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-348-ego_mc.png" width="125" height="90">
+</td>
+</table>
 
+<table class='container'>
+<td>
+<p>Sample Network</p>
+<img src="stanford-414-ego_mc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-686-ego_mc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-1684-ego_mc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-1912-ego_mc.png" width="125" height="90">
+</td>
+</table>
 
+<table class='container'>
+<td>
+<p>Sample Network</p>
+<img src="stanford-3437-ego_mc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-3980-ego_mc.png" width="125" height="90">
+</td>
+<td>
+<p>Erdo-Renyi</p>
+<img src="erdo_mc.png" width="125" height="90">
+</td>
+<td>
+<img width="125" height="90">
+</td>
+</table>
+
+<br></br>
+<br></br>
+
+**Walk-trap community finding algorithm**
+<table class='container'>
+<td>
+<p>My Ego Network</p>
+<img src="my-ego_wtc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-0-ego_wtc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-107-ego_wtc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-348-ego_wtc.png" width="125" height="90">
+</td>
+</table>
+
+<table class='container'>
+<td>
+<p>Sample Network</p>
+<img src="stanford-414-ego_wtc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-686-ego_wtc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-1684-ego_wtc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-1912-ego_wtc.png" width="125" height="90">
+</td>
+</table>
+
+<table class='container'>
+<td>
+<p>Sample Network</p>
+<img src="stanford-3437-ego_wtc.png" width="125" height="90">
+</td>
+<td>
+<p>Sample Network</p>
+<img src="stanford-3980-ego_wtc.png" width="125" height="90">
+</td>
+<td>
+<p>Erdo-Renyi</p>
+<img src="erdo_wtc.png" width="125" height="90">
+</td>
+<td>
+<img width="125" height="90">
+</td>
+</table>
+
+<br></br>
+**Interpretation**
+
+It appears that the number of communities detected varies between the sample ego networks. The second network from the top left has the most similar community structure as my ego network. However, there are a lot of communities amongst the other networks. The third network from the top appears to have a giant componenent and many small cliques suggesting that there is a large group of friends with many connections as well as many small groups of friends.
 
 ## References
 
