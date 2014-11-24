@@ -27,23 +27,164 @@ The other anomalyzed data sets were obtained from [Stanford's](http://snap.stanf
 The nodes represent the friends from the corresponding individual's facebook ego network data. The edges represent the mutual friend relationships. I believe there may have been some munging/filtering of data in the stanford ego networks.
 
 ### Subjective interestingness/originality of the subject of data collection
-In addition to the raw data from my facebook ego network, I've manually inserted "test" labels of how I met each of my individual friends in my network. Part of the goal of this project is to see whether different community detection algorithms could pick up the correct clusters corresponding to how I've met them in person. For example, from playing Ultimate Frisbee, high school, UBC stats department, etc.
+In addition to the raw data from my facebook ego network, I've manually inserted "test" labels of how I met each individual friend in my network. Part of the goal of this project is to see whether different community detection algorithms could pick up the correct clusters corresponding to how I've met them in person. For example, from playing Ultimate Frisbee, high school, UBC stats department, etc.
 
 In addition, the idea of including additional ego network data came from Dr. Lada Adamic's reply in this [thread](https://class.coursera.org/sna-004/forum/thread?thread_id=357). Therefore, the ensemble of ego network is usually of interest also.
 
 ## Data Analysis
 
 ### Stats on Personal Network
-The following step-by-step code makes use of some [helper functions]() created to generate statistics. It is not included here to minimize visual clutter. 
+The following step-by-step code makes use of some [helper functions](https://github.com/kenlau177/Coursera_SNA_FB/blob/master/computeStats.R) created to generate statistics. It is not included here to minimize visual clutter. 
 
-
-**Load in the following packages**
+**Load in the following packages and helper functions**
 ```{r, message=F}
 library(igraph)
 library(RColorBrewer)
 library(plyr)
 library(dplyr)
+library(xtable)
+library(gridExtra)
+
+source("count.degree.distribution.R")
+source("computeStats.R")
 ```
+
+**Read in the Graph**
+```{r}
+fbNetworkFile = "facebook_with_relation.gml"
+G = read.graph(file=fbNetworkFile, format="gml")
+```
+
+**The "test labels" I mentioned earlier are called relations, that is, how I first met a particular friend. Assign a colour to each relation.**
+```{r}
+pairedColors = c(brewer.pal(n=12, name="Paired"))
+names(pairedColors) = c("ultimate-rec", "ultimate-competitive", "ubc-cpsc", 
+                        "ubc-stat", "ubc-event", "closest-friends", "soccer", 
+                        "hockey", "toys-r-us", "environment-canada", 
+                        "high-school", "relative")
+V(G)$color = revalue(V(G)$relation, pairedColors)
+```
+
+#### Graph Statistics
+**Compute some graph statistics on personal network**
+```{r}
+outGraphStats = computeGraphStats(G)
+```
+**Average shortest path:**
+This is the average number of steps along the shortest paths for all possible pairs of network nodes.
+
+**Cluster coefficient:**
+Degree to which nodes in a graph tend to cluster together. 
+
+**Local Cluster coefficient:**
+The fraction pairs of neighbours of the node that are themselves connected. This is the local cluster coefficient for myself. 
+
+- Average shortest path: `r outGraphStats$avgShortestPath`
+- Cluster coefficient: `r outGraphStats$transitivity`
+- Local cluster coefficient: `r outGraphStats$localClusterCoefG`
+
+**Let's compare this with a erdos-renyi random graph to see how it compares with my ego network**
+
+**First simulate an erdos-renyi random graph is same number of nodes and edges**
+```{r}
+erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
+```
+
+**Compute some graph statistics on erdos-renyi graph**
+```{r}
+gsErdo = computeGraphStats(erdo)
+```
+- Average shortest path: `r gsErdo$avgShortestPath`
+- Cluster coefficient: `r gsErdo$transitivity`
+- Local cluster coefficient: `r gsErdo$localClusterCoefG`
+
+**Interpretation**
+Both the average shortest path and cluster coefficient for the ego network is both higher than the random graph which is interesting. The ego network has several dense clusters, and many cliques within clusters as we shall see later. Therefore, the cluster coefficient is high. Since, there are nodes with very few links may have contributed to the higher average shortest path.
+
+#### Individual Statistics
+Here, we compute individual statistics about the nodes in the graphs. I'll only only be computing these for a few people from every relation (or "test" labels). 
+
+**Degree:**
+The number of mutual friends.
+
+**Betweeness:**
+The number of shortest paths from all the nodes to all others that pass through that node.
+
+**Closeness:**
+The length of the average shortest path between a node and all other nodes in the network.
+
+**Pick some names to analyze**
+```{r}
+nameList = c("Yuji Aizawa", "Jasper Lu", "Rhona Yue", "Kevin Underhill",
+          "Esther Fann", "Sean Montgomery", "Tyki Sueyoshi", "Louisa Lau",
+          "Ellery Lee", "Jonathan Baik", "Alex Tan", "Andrew Brear",
+          "Angela S", "Simon Tai")
+```
+
+**Compute individual statistics**
+```{r}
+nodeStats = computeNodeStats(G)
+nodeStats = cbind("name"=V(G)$label, "relation"=V(G)$relation, nodeStats)
+nodeStats = data.frame(nodeStats)
+nodeStats = nodeStats %>% filter(name %in% nameList) %>% 
+              arrange(desc(betweenness))
+```
+```{r, results='asis'}
+print(xtable(nodeStats), comment=F, type="html", include.rownames=F)
+```
+
+<br></br>
+**Interpretation**
+
+The table is ordered by highest betweenness. Yuji Aizawa is one of my closest friends. It appears that he has both the highest number of mutual friends and betweenness. This table also shows that a high number of degree does not imply that betweenness is high. Moreover, my closer friends have generally high betweeness.
+
+#### Visualizations
+**First filter out the labels to show only the names of interest**
+```{r}
+V(G)$label.cex = 1
+labelsG = V(G)$label
+labelsG[!(labelsG %in% nameList)] = NA
+```
+**The layout below is a great default layout for large graphs. [Here](http://stackoverflow.com/questions/5968612/how-do-i-lengthen-edges-in-an-igraph-network-plot-layout-fruchterman-reingold) is where I found it. In addition, the betweenness property is encoded by node size. Whereas, the relation is encoded with colour.
+```{r, fig.width=10, fig.height=8, fig.align='center'}
+opar <- par()$mar; par(mar=rep(0, 4))
+layout <- layout.fruchterman.reingold(G, niter=500, area=vcount(G)^2.3, 
+            repulserad=vcount(G)^2.8)
+myPlot = plot(G, layout=layout, vertex.size=log(betweenness(G) + 1), 
+          vertex.label=labelsG, vertex.label.color="black")
+legendLabels = unique(V(G)$relation)
+legendColours = unique(V(G)$color)
+legend("topleft", legend=legendLabels, col=legendColours, pch=19, 
+  bty="n", cex=.8)
+```
+<br></br>
+**Interpretation**
+
+The algorithm layout (force-directed type?) algorithm  did a fairly good job at placing the nodes on the graph in respect to the true relation labels. That is to say, we can clearly discriminate the different groups. Of course, there may have been a small bias while manually labelling the points. However, most relation reflect my first encounter with the person, so the bias is minimized in that respect. What stood out to me was, Simon Tai appears to be clustered with my friends whom play ultimate frisbee. However, I know him because of my relation with him within the stats department at ubc. It turns out he plays ultimate frisbee recreationally and has a lot of friends in common that also plays ultimate. 
+
+<br></br>
+Now let's take a look at what the erdos-renyi random graph look like.
+```{r, fig.width=10, fig.height=8, fig.align='center'}
+labelsG = NA
+erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
+erdoPlot = plot(erdo, layout=layout, vertex.size=log(betweenness(erdo)+1), 
+              vertex.label=labelsG)
+title("Erdos-Renyi Random Graph")
+```
+
+##### Community Detection
+We'll try 2 different community detection algorithms: modularity and walk-trap. Modularity algorithm considers edges that fall within a community or between a community and the rest of the network. Walk-trap algorithm find communities through random walks. The idea behind walk-trap is that short random walks tend to stay in the same community.
+
+**Execute community finding algorithms for personal network and erdos-renyi graphs**
+```{r}
+mc = fastgreedy.community(G)
+mcErdo = fastgreedy.community(erdo)
+
+wtc = walktrap.community(G, steps=4)
+wtcErdo = walktrap.community(erdo, steps=4)
+```
+
+Plotting details are omitted here, but the code can be found in [plotCommunites]()
 
 
 
