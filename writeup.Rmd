@@ -11,7 +11,7 @@ bibliography: bibfile.bib
 ---
 
 ## Introduction
-This project is an extension of the analysis of my facebook ego network as worked on in class. In addition to the in-depth analysis of the personal network, I also carried out an analysis between a few anomalyzed ego networks.
+This project is an extension to the analysis of my facebook ego network as worked on in class. In addition to the in-depth analysis of the personal network, I also carried out an analysis between a few anomalyzed ego networks.
 
 ## Obtaining Data
 ### Documentation
@@ -21,15 +21,15 @@ My personal facebook ego network data is obtained through the [Getnet](http://sn
 - [personal ego network in .gml](https://raw.githubusercontent.com/kenlau177/Coursera_SNA_FB/master/facebook_with_relation.gml)
 - [stanford ego networks in .gml](https://github.com/kenlau177/Coursera_SNA_FB/tree/master/facebook_stanford)
 
-The other anomalyzed data sets were obtained from [Stanford's](http://snap.stanford.edu/data/egonets-Facebook.html) collection of social network data. There are 10 anomalyzed ego network data in total. We make use of these by comparing the properties with my personal network [@stanford_ego].
+The other anomalyzed data sets were obtained from [Stanford's](http://snap.stanford.edu/data/egonets-Facebook.html) collection of social network data. There are 9 anomalyzed ego network data in total [@stanford_ego]. I compared the properties of the anomalyzed networks with my personal network.
 
 ### Explanation of Criteria for Including Nodes and Edges
-The nodes represent the friends from the corresponding individual's facebook ego network data. The edges represent the mutual friend relationships. I believe there may have been some munging/filtering of data in the stanford ego networks.
+The nodes in the networks represent friends. The edges represent the mutual friend relationships for each node. I kept all the nodes and edges for each network.
 
 ### Subjective interestingness/originality of the subject of data collection
-In addition to the raw data from my facebook ego network, I've manually inserted "test" labels of how I met each individual friend in my network. Part of the goal of this project is to see whether different community detection algorithms could pick up the correct clusters corresponding to how I've met them in person. For example, from playing Ultimate Frisbee, high school, UBC stats department, etc.
+In addition to the raw data from my facebook ego network, I've manually inserted "test" labels based on my relationship with each friend in my network. Part of the goal of this project is to see whether different community detection algorithms could pick up the correct clusters corresponding to my relationship with that person. These relations consist of competitive ultimate frisbee, recreational ultimate frisbee, work at environment canada, ubc computer science classmate, ubc statistics classmate, work at toys-r-us, high school, recreational hockey, recreational soccer, event at ubc, closest friends, or relative.
 
-In addition, the idea of including additional ego network data came from Dr. Lada Adamic's reply in this [thread](https://class.coursera.org/sna-004/forum/thread?thread_id=357). Therefore, the ensemble of ego network is usually of interest also.
+In addition, the idea of including additional ego network data came from Dr. Lada Adamic's reply in this [thread](https://class.coursera.org/sna-004/forum/thread?thread_id=357). Therefore, the ensemble of ego network is usually of interest.
 
 ## Data Analysis
 
@@ -55,7 +55,7 @@ fbNetworkFile = "facebook_with_relation.gml"
 G = read.graph(file=fbNetworkFile, format="gml")
 ```
 
-**The "test labels" I mentioned earlier are called relations, that is, how I first met a particular friend. Assign a colour to each relation.**
+**The "test labels" I mentioned earlier are called relations, that is, my relationship with a friend. Assign a colour to each relation.**
 ```{r}
 pairedColors = c(brewer.pal(n=12, name="Paired"))
 names(pairedColors) = c("ultimate-rec", "ultimate-competitive", "ubc-cpsc", 
@@ -77,15 +77,15 @@ This is the average number of steps along the shortest paths for all possible pa
 Degree to which nodes in a graph tend to cluster together. 
 
 **Local Cluster coefficient:**
-The fraction pairs of neighbours of the node that are themselves connected. This is the local cluster coefficient for myself. 
+The fraction pairs of neighbours of the node that are themselves connected. This is the local cluster coefficient of myself. 
 
 - Average shortest path: `r outGraphStats$avgShortestPath`
 - Cluster coefficient: `r outGraphStats$transitivity`
 - Local cluster coefficient: `r outGraphStats$localClusterCoefG`
 
-**Let's compare this with a erdos-renyi random graph to see how it compares with my ego network**
+**Let's compare this with an erdos-renyi random graph to see how it compares with my ego network**
 
-**First simulate an erdos-renyi random graph is same number of nodes and edges**
+**First simulate an erdos-renyi random graph with the same number of nodes and edges**
 ```{r}
 erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
 ```
@@ -99,7 +99,8 @@ gsErdo = computeGraphStats(erdo)
 - Local cluster coefficient: `r gsErdo$localClusterCoefG`
 
 **Interpretation**
-Both the average shortest path and cluster coefficient for the ego network is both higher than the random graph which is interesting. The ego network has several dense clusters, and many cliques within clusters as we shall see later. Therefore, the cluster coefficient is high. Since, there are nodes with very few links may have contributed to the higher average shortest path.
+
+Both the average shortest path and cluster coefficient for the ego network is  higher than the random graph which is interesting. The ego network has several dense clusters and many cliques within clusters. The fact that there are a few cliques with little connections in the ego network may have contributed to the higher average shortest paths. 
 
 #### Individual Statistics
 Here, we compute individual statistics about the nodes in the graphs. I'll only only be computing these for a few people from every relation (or "test" labels). 
@@ -136,7 +137,7 @@ print(xtable(nodeStats), comment=F, type="html", include.rownames=F)
 <br></br>
 **Interpretation**
 
-The table is ordered by highest betweenness. Yuji Aizawa is one of my closest friends. It appears that he has both the highest number of mutual friends and betweenness. This table also shows that a high number of degree does not imply that betweenness is high. Moreover, my closer friends have generally high betweeness.
+The table is ordered by highest betweenness. Yuji Aizawa is one of my closest friends. It appears that he has both the highest number of mutual friends and betweenness. This table also shows that a high number of degree does not imply that betweenness is high, for example, Kevin Underhill. Moreover, my closer friends generally have the highest betweeness.
 
 #### Visualizations
 **First filter out the labels to show only the names of interest**
@@ -145,7 +146,7 @@ V(G)$label.cex = 1
 labelsG = V(G)$label
 labelsG[!(labelsG %in% nameList)] = NA
 ```
-**The layout below is a great default layout for large graphs. [Here](http://stackoverflow.com/questions/5968612/how-do-i-lengthen-edges-in-an-igraph-network-plot-layout-fruchterman-reingold) is where I found it. In addition, the betweenness property is encoded by node size. Whereas, the relation is encoded with colour.
+**The layout below is a good default layout for large graphs. [Here](http://stackoverflow.com/questions/5968612/how-do-i-lengthen-edges-in-an-igraph-network-plot-layout-fruchterman-reingold) is where I found it. In addition, the betweenness property is encoded by node size. Whereas, the relation is encoded with colour.**
 ```{r, fig.width=10, fig.height=8, fig.align='center'}
 opar <- par()$mar; par(mar=rep(0, 4))
 layout <- layout.fruchterman.reingold(G, niter=500, area=vcount(G)^2.3, 
@@ -160,7 +161,7 @@ legend("topleft", legend=legendLabels, col=legendColours, pch=19,
 <br></br>
 **Interpretation**
 
-The algorithm layout (force-directed type?) algorithm  did a fairly good job at placing the nodes on the graph in respect to the true relation labels. That is to say, we can clearly discriminate the different groups. Of course, there may have been a small bias while manually labelling the points. However, most relation reflect my first encounter with the person, so the bias is minimized in that respect. What stood out to me was, Simon Tai appears to be clustered with my friends whom play ultimate frisbee. However, I know him because of my relation with him within the stats department at ubc. It turns out he plays ultimate frisbee recreationally and has a lot of friends in common that also plays ultimate. 
+The (force-directed?) layout algorithm  did a fairly good job at placing the nodes on the graph in respect to the true relation labels. That is to say, we can clearly discriminate the different groups. Of course, there may have been a small bias while manually labelling the points, for example, if a friend of mine worked at environment canada and also played ultimate frisbee. However, most reflect my relationship with the person. What stood out to me was, Simon Tai appeared to be clustered with my friends whom play ultimate frisbee. However, my relationship with him is through the stats department at ubc. It turns out he also plays ultimate frisbee recreationally and we have a lot of friends in common that play ultimate frisbee.
 
 <br></br>
 Now let's take a look at what the erdos-renyi random graph look like.
@@ -173,7 +174,7 @@ title("Erdos-Renyi Random Graph")
 ```
 
 ##### Community Detection
-We'll try 2 different community detection algorithms: modularity and walk-trap. Modularity algorithm considers edges that fall within a community or between a community and the rest of the network. Walk-trap algorithm find communities through random walks. The idea behind walk-trap is that short random walks tend to stay in the same community. (This will count towards having tried out a method not introduced in class)
+We carried out 2 different community detection algorithms: modularity and walk-trap. Modularity algorithm considers edges that fall within a community or between a community and the rest of the network. Walk-trap algorithm finds communities through random walks. The idea behind walk-trap is that short random walks tend to stay in the same community. (Walk-trap will count towards having tried out a method not introduced in class)
 
 **Execute community finding algorithms for personal network and erdos-renyi graphs**
 ```{r}
@@ -211,7 +212,8 @@ Plotting details are omitted here, but the code can be found in [plotCommunites.
 </table>
 
 **Interpretation**
-The erdos-renyi graph does not exhibit any interesting communities after performing the modularity and walk-trap algorithms. However, the ego network definitely has out some interesting communities. In particular the walk-trap algorithm detected the cluster people in the ego network that plays ultimate. Moreover, it grouped together my closest friends with the people who I met at a ubc event. It found the group of people I worked at toys-r-us. It trivially detected my relatives, since they have no connection with any other person in the graph.
+
+The erdos-renyi random graph does not exhibit any interesting communities after performing the modularity and walk-trap algorithms. However, the ego network definitely has some interesting communities. In particular the walk-trap algorithm detected the cluster involving friends who play ultimate. Moreover, it grouped together my closest friends with the people who I met at a ubc event. It found the group of people I worked at toys-r-us. It trivially detected my relatives, since they have no connections with any other person in the graph.
 
 ### Stats Including Stanford Anomalyzed Ego Networks
 
@@ -240,10 +242,11 @@ print(xtable(graphStatsDf), comment=F, type="html", include.rownames=F)
 ```
 <br></br>
 **Interpretation**
-The table was arranged with respect to the transitivity, also known as clustering coefficient. It turns out that my ego network is third highest in terms of transivity. All the ego networks had much higher transitivity levels than the erdos-renyi random graph. Similary, the average shortest path is also all greater than the random graph. In terms of average shortest path and transitivity, my ego network fit right in with the stanford samples.
+
+The table was arranged with respect to transitivity, also known as clustering coefficient. It turns out that my ego network is third highest in terms of transivity. All the ego networks had much higher transitivity levels than the erdos-renyi random graph. Similary, the average shortest path is also all greater than the random graph. In terms of average shortest path and transitivity, my ego network fit right in with the stanford samples.
 
 #### Community Comparisons and Visualizations
-Community structure finding is carried out on the 8 sample ego network from the stanford database. We used both the modularity score and walk-trap algorithm. The figures are shown below.
+Community structure finding is carried out on the 9 sample ego network from the stanford database. We used both the modularity score and walk-trap algorithm. The figures are shown below.
 
 **Modularity score community finding algorithm**
 <table class='container'>
@@ -365,7 +368,7 @@ Community structure finding is carried out on the 8 sample ego network from the 
 <br></br>
 **Interpretation**
 
-It appears that the number of communities detected varies between the sample ego networks. The second network from the top left has the most similar community structure as my ego network. However, there are a lot of communities amongst the other networks. The third network from the top appears to have a giant componenent and many small cliques suggesting that there is a large group of friends with many connections as well as many small groups of friends.
+The number of communities detected varies between the sample ego networks. The second network from the top left has the most similar community structure as my ego network. However, there are a lot of communities amongst the other networks. The third network from the top appears to have several giant componenents and many external small cliques suggesting that there is a large group of friends with many connections as well as many small groups of friends.
 
 ## References
 
