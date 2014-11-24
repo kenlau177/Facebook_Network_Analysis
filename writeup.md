@@ -168,19 +168,8 @@ labelsG[!(labelsG %in% nameList)] = NA
 ```
 **The layout below is a good default layout for large graphs. [Here](http://stackoverflow.com/questions/5968612/how-do-i-lengthen-edges-in-an-igraph-network-plot-layout-fruchterman-reingold) is where I found it. In addition, the betweenness property is encoded by node size. Whereas, the relation is encoded with colour.**
 
-```r
-opar <- par()$mar; par(mar=rep(0, 4))
-layout <- layout.fruchterman.reingold(G, niter=500, area=vcount(G)^2.3, 
-            repulserad=vcount(G)^2.8)
-myPlot = plot(G, layout=layout, vertex.size=log(betweenness(G) + 1), 
-          vertex.label=labelsG, vertex.label.color="black")
-legendLabels = unique(V(G)$relation)
-legendColours = unique(V(G)$color)
-legend("topleft", legend=legendLabels, col=legendColours, pch=19, 
-  bty="n", cex=.8)
-```
+<img src="my-ego.png" width="500" height="350">
 
-<img src="./writeup_files/figure-html/unnamed-chunk-11-1.png" title="" alt="" style="display: block; margin: auto;" />
 <br></br>
 **Interpretation**
 
@@ -189,15 +178,7 @@ The (force-directed?) layout algorithm  did a fairly good job at placing the nod
 <br></br>
 Now let's take a look at what the erdos-renyi random graph look like.
 
-```r
-labelsG = NA
-erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
-erdoPlot = plot(erdo, layout=layout, vertex.size=log(betweenness(erdo)+1), 
-              vertex.label=labelsG)
-title("Erdos-Renyi Random Graph")
-```
-
-<img src="./writeup_files/figure-html/unnamed-chunk-12-1.png" title="" alt="" style="display: block; margin: auto;" />
+<img src="erdo.png" width="500" height="350">
 
 ##### Community Detection
 We carried out 2 different community detection algorithms: modularity and walk-trap. Modularity algorithm considers edges that fall within a community or between a community and the rest of the network. Walk-trap algorithm finds communities through random walks. The idea behind walk-trap is that short random walks tend to stay in the same community. (Walk-trap will count towards having tried out a method not introduced in class)

@@ -33,12 +33,22 @@ labelsG[!(labelsG %in% nameList)] = NA
 opar <- par()$mar; par(mar=rep(0, 4))
 layout <- layout.fruchterman.reingold(G, niter=500, area=vcount(G)^2.3, 
                                       repulserad=vcount(G)^2.8)
+png(file="my-ego.png")
 myPlot = plot(G, layout=layout, vertex.size=log(betweenness(G) + 1), 
               vertex.label=labelsG, vertex.label.color="black")
 legendLabels = unique(V(G)$relation)
 legendColours = unique(V(G)$color)
 legend("topleft", legend=legendLabels, col=legendColours, pch=19, 
        bty="n", cex=.8)
+dev.off()
+
+png(file="erdo.png")
+labelsG = NA
+erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
+erdoPlot = plot(erdo, layout=layout, vertex.size=log(betweenness(erdo)+1), 
+                vertex.label=labelsG)
+title("Erdos-Renyi Random Graph")
+dev.off()
 
 mc = fastgreedy.community(G)
 mcErdo = fastgreedy.community(erdo)
