@@ -154,6 +154,7 @@ print(xtable(nodeStats), comment=F, type="html", include.rownames=F)
    </table>
 
 <br></br>
+
 **Interpretation**
 
 The table is ordered by highest betweenness. Yuji Aizawa is one of my closest friends. It appears that he has both the highest number of mutual friends and betweenness. This table also shows that a high number of degree does not imply that betweenness is high, for example, Kevin Underhill. Moreover, my closer friends generally have the highest betweeness.
@@ -168,17 +169,19 @@ labelsG[!(labelsG %in% nameList)] = NA
 ```
 **The layout below is a good default layout for large graphs. [Here](http://stackoverflow.com/questions/5968612/how-do-i-lengthen-edges-in-an-igraph-network-plot-layout-fruchterman-reingold) is where I found it. In addition, the betweenness property is encoded by node size. Whereas, the relation is encoded with colour.**
 
-<img src="my-ego.png" width="500" height="350">
+<img src="my-ego.png" width="600" height="500">
 
 <br></br>
+
 **Interpretation**
 
 The (force-directed?) layout algorithm  did a fairly good job at placing the nodes on the graph in respect to the true relation labels. That is to say, we can clearly discriminate the different groups. Of course, there may have been a small bias while manually labelling the points, for example, if a friend of mine worked at environment canada and also played ultimate frisbee. However, most reflect my relationship with the person. What stood out to me was, Simon Tai appeared to be clustered with my friends whom play ultimate frisbee. However, my relationship with him is through the stats department at ubc. It turns out he also plays ultimate frisbee recreationally and we have a lot of friends in common that play ultimate frisbee.
 
 <br></br>
+
 Now let's take a look at what the erdos-renyi random graph look like.
 
-<img src="erdo.png" width="500" height="350">
+<img src="erdo.png" width="600" height="500">
 
 ##### Community Detection
 We carried out 2 different community detection algorithms: modularity and walk-trap. Modularity algorithm considers edges that fall within a community or between a community and the rest of the network. Walk-trap algorithm finds communities through random walks. The idea behind walk-trap is that short random walks tend to stay in the same community. (Walk-trap will count towards having tried out a method not introduced in class)
@@ -262,6 +265,7 @@ graphStatsDf = graphStatsDf %>% arrange(desc(transitivity))
   <tr> <td> erdo_network </td> <td align="right"> 1.88 </td> <td align="right"> 0.13 </td> <td align="right"> 0.13 </td> </tr>
    </table>
 <br></br>
+
 **Interpretation**
 
 The table was arranged with respect to transitivity, also known as clustering coefficient. It turns out that my ego network is third highest in terms of transivity. All the ego networks had much higher transitivity levels than the erdos-renyi random graph. Similary, the average shortest path is also all greater than the random graph. In terms of average shortest path and transitivity, my ego network fit right in with the stanford samples.
@@ -387,6 +391,7 @@ Community structure finding is carried out on the 9 sample ego network from the 
 </table>
 
 <br></br>
+
 **Interpretation**
 
 The number of communities detected varies between the sample ego networks. The second network from the top left has the most similar community structure as my ego network. However, there are a lot of communities amongst the other networks. The third network from the top appears to have several giant componenents and many external small cliques suggesting that there is a large group of friends with many connections as well as many small groups of friends.

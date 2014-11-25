@@ -30,10 +30,10 @@ V(G)$label.cex = 1
 labelsG = V(G)$label
 labelsG[!(labelsG %in% nameList)] = NA
 
-opar <- par()$mar; par(mar=rep(0, 4))
 layout <- layout.fruchterman.reingold(G, niter=500, area=vcount(G)^2.3, 
                                       repulserad=vcount(G)^2.8)
 png(file="my-ego.png")
+opar <- par()$mar; par(mar=rep(0, 4));
 myPlot = plot(G, layout=layout, vertex.size=log(betweenness(G) + 1), 
               vertex.label=labelsG, vertex.label.color="black")
 legendLabels = unique(V(G)$relation)
@@ -43,6 +43,7 @@ legend("topleft", legend=legendLabels, col=legendColours, pch=19,
 dev.off()
 
 png(file="erdo.png")
+opar <- par()$mar; par(mar=c(0,0,1,0));
 labelsG = NA
 erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
 erdoPlot = plot(erdo, layout=layout, vertex.size=log(betweenness(erdo)+1), 

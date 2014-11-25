@@ -149,7 +149,7 @@ labelsG[!(labelsG %in% nameList)] = NA
 ```
 **The layout below is a good default layout for large graphs. [Here](http://stackoverflow.com/questions/5968612/how-do-i-lengthen-edges-in-an-igraph-network-plot-layout-fruchterman-reingold) is where I found it. In addition, the betweenness property is encoded by node size. Whereas, the relation is encoded with colour.**
 
-<img src="my-ego.png" width="500" height="350">
+<img src="my-ego.png" width="600" height="500">
 
 <br></br>
 
@@ -161,7 +161,7 @@ The (force-directed?) layout algorithm  did a fairly good job at placing the nod
 
 Now let's take a look at what the erdos-renyi random graph look like.
 
-<img src="erdo.png" width="500" height="350">
+<img src="erdo.png" width="600" height="500">
 
 ##### Community Detection
 We carried out 2 different community detection algorithms: modularity and walk-trap. Modularity algorithm considers edges that fall within a community or between a community and the rest of the network. Walk-trap algorithm finds communities through random walks. The idea behind walk-trap is that short random walks tend to stay in the same community. (Walk-trap will count towards having tried out a method not introduced in class)
