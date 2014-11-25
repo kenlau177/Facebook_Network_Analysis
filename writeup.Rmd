@@ -134,7 +134,6 @@ nodeStats = nodeStats %>% filter(name %in% nameList) %>%
 print(xtable(nodeStats), comment=F, type="html", include.rownames=F)
 ```
 
-<br></br>
 
 **Interpretation**
 

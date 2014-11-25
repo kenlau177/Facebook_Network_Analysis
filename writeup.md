@@ -153,7 +153,6 @@ print(xtable(nodeStats), comment=F, type="html", include.rownames=F)
   <tr> <td> Louisa Lau </td> <td> relative </td> <td align="right"> 2.00 </td> <td align="right"> 0.00 </td> <td align="right"> 0.00 </td> </tr>
    </table>
 
-<br></br>
 
 **Interpretation**
 
