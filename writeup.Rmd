@@ -135,6 +135,7 @@ print(xtable(nodeStats), comment=F, type="html", include.rownames=F)
 ```
 
 <br></br>
+
 **Interpretation**
 
 The table is ordered by highest betweenness. Yuji Aizawa is one of my closest friends. It appears that he has both the highest number of mutual friends and betweenness. This table also shows that a high number of degree does not imply that betweenness is high, for example, Kevin Underhill. Moreover, my closer friends generally have the highest betweeness.
@@ -151,11 +152,13 @@ labelsG[!(labelsG %in% nameList)] = NA
 <img src="my-ego.png" width="500" height="350">
 
 <br></br>
+
 **Interpretation**
 
 The (force-directed?) layout algorithm  did a fairly good job at placing the nodes on the graph in respect to the true relation labels. That is to say, we can clearly discriminate the different groups. Of course, there may have been a small bias while manually labelling the points, for example, if a friend of mine worked at environment canada and also played ultimate frisbee. However, most reflect my relationship with the person. What stood out to me was, Simon Tai appeared to be clustered with my friends whom play ultimate frisbee. However, my relationship with him is through the stats department at ubc. It turns out he also plays ultimate frisbee recreationally and we have a lot of friends in common that play ultimate frisbee.
 
 <br></br>
+
 Now let's take a look at what the erdos-renyi random graph look like.
 
 <img src="erdo.png" width="500" height="350">
@@ -228,6 +231,7 @@ graphStatsDf = graphStatsDf %>% arrange(desc(transitivity))
 print(xtable(graphStatsDf), comment=F, type="html", include.rownames=F)
 ```
 <br></br>
+
 **Interpretation**
 
 The table was arranged with respect to transitivity, also known as clustering coefficient. It turns out that my ego network is third highest in terms of transivity. All the ego networks had much higher transitivity levels than the erdos-renyi random graph. Similary, the average shortest path is also all greater than the random graph. In terms of average shortest path and transitivity, my ego network fit right in with the stanford samples.
@@ -353,6 +357,7 @@ Community structure finding is carried out on the 9 sample ego network from the 
 </table>
 
 <br></br>
+
 **Interpretation**
 
 The number of communities detected varies between the sample ego networks. The second network from the top left has the most similar community structure as my ego network. However, there are a lot of communities amongst the other networks. The third network from the top appears to have several giant componenents and many external small cliques suggesting that there is a large group of friends with many connections as well as many small groups of friends.
