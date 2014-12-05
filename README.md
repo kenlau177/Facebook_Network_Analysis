@@ -1,7 +1,7 @@
-Coursera_SNA_FB
+Facebook Network Analysis
 ===============
 
 Social Network Analysis Project on Ego Network Analysis of Facebook Network data
 
-If you get the chance, see the [html version](http://kenlau177.github.io/) instead!
+See the [html version](http://kenlau177.github.io/Facebook_Network_Analysis) instead!
 
