@@ -3,7 +3,7 @@ Ken Lau
 Sunday, November 23, 2014  
 
 ## Introduction
-This project explores my own friendship network. This is also the first time I'm performing any empirical network analysis, so I decided to keep it simple by analyzing something I'm more familiar with. What is more, this could possibly act as a tutorial for anyone wanting to do a similar analysis since I know it can be boring looking at someone else's social network. I also carried out an analysis between a few anomalyzed ego networks from stanford's database. 
+This project explores my own friendship network. This is also the first time I'm performing an empirical network analysis, so I decided to start with analyzing something I'm more familiar with. What is more, this could possibly act as a tutorial for anyone wanting to do a similar analysis. I also carried out an analysis between a few anomalyzed ego networks from stanford's database. 
 
 ## Obtaining Data
 ### Documentation
