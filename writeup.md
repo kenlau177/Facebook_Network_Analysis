@@ -1,17 +1,17 @@
-# Coursera SNA Peer-Eval Project
+# STAT545 Personal Network Analysis
 Ken Lau  
 Sunday, November 23, 2014  
 
 ## Introduction
-This project is an extension to the analysis of my facebook ego network as worked on in class. In addition to the in-depth analysis of the personal network, I also carried out an analysis between a few anomalyzed ego networks.
+This project explores my own friendship network. This is also the first time I'm performing any empirical network analysis, so I decided to keep it simple by analyzing something I'm more familiar with. What is more, this could possibly act as a tutorial for anyone wanting to do a similar analysis since I know it can be boring looking at someone else's social network. I also carried out an analysis between a few anomalyzed ego networks from stanford's database. 
 
 ## Obtaining Data
 ### Documentation
-My personal facebook ego network data is obtained through the [Getnet](http://snacourse.com/getnet/?code=AQCIKpB2S0cmHie-fp2DgMK0I-WjziwLMG50WC8jEkqU56gNk5h4RlvFWz2RKRm0-dHvYK0ixVf86oomggtWkoGIF3yKRtkn5UGMZ3ZSqaSMZYhcAmV5TkubcYYEIoOUbKbCtJkHK82cph9KOHz-GaL6E99J3FY2oxuF6ifK1b_mnAhcFOwNEF8A77XdeYcZWdoUWLVUNzezrXHuCwSj1IJ6mNb36nRUQlX4dbV-7h6gHkeFr5wEoQaHKFl9rdVNA-o7RB3ZAfpT1fACT4WEviFQ3H26mwAgc-lSqHB-2rvCVxykLRPi9EU-yC53VIw0G2o&state=097fd3530d754add30b79bab5331e3e6#_=_) app with instructions posted in [assignment 1](https://class.coursera.org/sna-004/assignment/view?assignment_id=2) of the SNA class. The data is downloaded in .gml format. 
+My personal facebook ego network data is obtained through the [Getnet](http://snacourse.com/getnet/?code=AQCIKpB2S0cmHie-fp2DgMK0I-WjziwLMG50WC8jEkqU56gNk5h4RlvFWz2RKRm0-dHvYK0ixVf86oomggtWkoGIF3yKRtkn5UGMZ3ZSqaSMZYhcAmV5TkubcYYEIoOUbKbCtJkHK82cph9KOHz-GaL6E99J3FY2oxuF6ifK1b_mnAhcFOwNEF8A77XdeYcZWdoUWLVUNzezrXHuCwSj1IJ6mNb36nRUQlX4dbV-7h6gHkeFr5wEoQaHKFl9rdVNA-o7RB3ZAfpT1fACT4WEviFQ3H26mwAgc-lSqHB-2rvCVxykLRPi9EU-yC53VIw0G2o&state=097fd3530d754add30b79bab5331e3e6#_=_) app with instructions posted in [assignment 1](https://class.coursera.org/sna-004/assignment/view?assignment_id=2) of a SNA class. The data is downloaded in .gml format. 
 
-- [Project Repository](https://github.com/kenlau177/Coursera_SNA_FB)
-- [personal ego network in .gml](https://raw.githubusercontent.com/kenlau177/Coursera_SNA_FB/master/facebook_with_relation.gml)
-- [stanford ego networks in .gml](https://github.com/kenlau177/Coursera_SNA_FB/tree/master/facebook_stanford)
+- [Project Repository](https://github.com/kenlau177/STAT545_Facebook_Network_Analysis)
+- [personal ego network in .gml](https://raw.githubusercontent.com/kenlau177/STAT545_Facebook_Network_Analysis/master/facebook_with_relation.gml)
+- [stanford ego networks in .gml](https://github.com/kenlau177/STAT545_Facebook_Network_Analysis/tree/master/facebook_stanford)
 
 The other anomalyzed data sets were obtained from [Stanford's](http://snap.stanford.edu/data/egonets-Facebook.html) collection of social network data. There are 9 anomalyzed ego network data in total [@stanford_ego]. I compared the properties of the anomalyzed networks with my personal network.
 
