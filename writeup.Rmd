@@ -11,11 +11,11 @@ bibliography: bibfile.bib
 ---
 
 ## Introduction
-This project explores my own friendship network. This is also the first time I'm performing any empirical network analysis, so I decided to keep it simple by analyzing something I'm more familiar with. What is more, this could possibly act as a tutorial for anyone wanting to do a similar analysis since I know it can be boring looking at someone else's social network. I also carried out an analysis between a few anomalyzed ego networks from stanford's database. 
+This project explores my facebook friend network. I hope this report provides a guide for anyone also interested in carrying out the analysis. Furthermore, I carried out an analysis between a few anomalyzed ego networks from stanford's database. 
 
 ## Obtaining Data
 ### Documentation
-My personal facebook ego network data is obtained through the [Getnet](http://snacourse.com/getnet/?code=AQCIKpB2S0cmHie-fp2DgMK0I-WjziwLMG50WC8jEkqU56gNk5h4RlvFWz2RKRm0-dHvYK0ixVf86oomggtWkoGIF3yKRtkn5UGMZ3ZSqaSMZYhcAmV5TkubcYYEIoOUbKbCtJkHK82cph9KOHz-GaL6E99J3FY2oxuF6ifK1b_mnAhcFOwNEF8A77XdeYcZWdoUWLVUNzezrXHuCwSj1IJ6mNb36nRUQlX4dbV-7h6gHkeFr5wEoQaHKFl9rdVNA-o7RB3ZAfpT1fACT4WEviFQ3H26mwAgc-lSqHB-2rvCVxykLRPi9EU-yC53VIw0G2o&state=097fd3530d754add30b79bab5331e3e6#_=_) app with instructions posted in [assignment 1](https://class.coursera.org/sna-004/assignment/view?assignment_id=2) of a SNA class. The data is downloaded in .gml format. 
+Our personal facebook ego network data can be obtained through the [Getnet](http://snacourse.com/getnet/?code=AQCIKpB2S0cmHie-fp2DgMK0I-WjziwLMG50WC8jEkqU56gNk5h4RlvFWz2RKRm0-dHvYK0ixVf86oomggtWkoGIF3yKRtkn5UGMZ3ZSqaSMZYhcAmV5TkubcYYEIoOUbKbCtJkHK82cph9KOHz-GaL6E99J3FY2oxuF6ifK1b_mnAhcFOwNEF8A77XdeYcZWdoUWLVUNzezrXHuCwSj1IJ6mNb36nRUQlX4dbV-7h6gHkeFr5wEoQaHKFl9rdVNA-o7RB3ZAfpT1fACT4WEviFQ3H26mwAgc-lSqHB-2rvCVxykLRPi9EU-yC53VIw0G2o&state=097fd3530d754add30b79bab5331e3e6#_=_) app with instructions posted in [assignment 1](https://class.coursera.org/sna-004/assignment/view?assignment_id=2) of a SNA class. The data is downloaded in .gml format. 
 
 - [Project Repository](https://github.com/kenlau177/STAT545_Facebook_Network_Analysis)
 - [personal ego network in .gml](https://raw.githubusercontent.com/kenlau177/STAT545_Facebook_Network_Analysis/master/facebook_with_relation.gml)
