@@ -1,0 +1,17 @@
+
+
+
+relation "ultimate-competitive"
+relation "ultimate-rec"
+relation "environment-canada"
+relation "ubc-cpsc"
+relation "high-school"
+relation "ubc-stat"
+relation "toys-r-us"
+relation "hockey"
+relation "ubc-event"
+relation "closest-friends"
+relation "soccer"
+relation "general-event"
+relation "relative"
+
