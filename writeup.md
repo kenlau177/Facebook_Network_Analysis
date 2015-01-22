@@ -92,8 +92,8 @@ erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
 ```r
 gsErdo = computeGraphStats(erdo)
 ```
-- Average shortest path: 1.8752599
-- Cluster coefficient: 0.1331344
+- Average shortest path: 1.8765667
+- Cluster coefficient: 0.1314621
 - Local cluster coefficient: 0.1321006
 
 **Interpretation**
