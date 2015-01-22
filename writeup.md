@@ -3,7 +3,7 @@ Ken Lau
 Sunday, November 23, 2014  
 
 ## Introduction
-This project explores my facebook friend network. I hope this report provides a guide for anyone also interested in carrying out the analysis. Furthermore, I carried out an analysis between a few anomalyzed ego networks from stanford's database. 
+This project explores my facebook friend network. I hope this report provides a guide for anyone also interested in carrying out their own friend network analysis. Furthermore, I carried out an analysis between a few anomalyzed ego networks from stanford's database. 
 
 ## Obtaining Data
 ### Documentation
@@ -92,8 +92,8 @@ erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
 ```r
 gsErdo = computeGraphStats(erdo)
 ```
-- Average shortest path: 1.8758539
-- Cluster coefficient: 0.1330322
+- Average shortest path: 1.8752599
+- Cluster coefficient: 0.1331344
 - Local cluster coefficient: 0.1321006
 
 **Interpretation**
