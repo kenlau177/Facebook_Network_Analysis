@@ -3,7 +3,7 @@ Ken Lau
 Sunday, November 23, 2014  
 
 ## Introduction
-This project explores my own friendship network. This is also the first time I'm performing an empirical network analysis, so I decided to start with analyzing something I'm more familiar with. What is more, this could possibly act as a tutorial for anyone wanting to do a similar analysis. I also carried out an analysis between a few anomalyzed ego networks from stanford's database. 
+This project explores my facebook friend network. I hope this report provides a guide for anyone also interested in carrying out their own friend network analysis. Furthermore, I carried out an analysis between a few anomalyzed ego networks from stanford's database. 
 
 ## Obtaining Data
 ### Documentation
@@ -92,8 +92,8 @@ erdo = erdos.renyi.game(length(V(G)), p.or.m=length(E(G)), type="gnm")
 ```r
 gsErdo = computeGraphStats(erdo)
 ```
-- Average shortest path: 1.8768043
-- Cluster coefficient: 0.1331016
+- Average shortest path: 1.8761212
+- Cluster coefficient: 0.1356898
 - Local cluster coefficient: 0.1321006
 
 **Interpretation**
@@ -261,7 +261,7 @@ graphStatsDf = graphStatsDf %>% arrange(desc(transitivity))
   <tr> <td> stanford-ego_3980 </td> <td align="right"> 2.55 </td> <td align="right"> 0.45 </td> <td align="right"> 0.00 </td> </tr>
   <tr> <td> stanford-ego_3437 </td> <td align="right"> 3.45 </td> <td align="right"> 0.45 </td> <td align="right"> 0.00 </td> </tr>
   <tr> <td> stanford-ego_0 </td> <td align="right"> 3.75 </td> <td align="right"> 0.43 </td> <td align="right"> 0.04 </td> </tr>
-  <tr> <td> erdo_network </td> <td align="right"> 1.88 </td> <td align="right"> 0.13 </td> <td align="right"> 0.13 </td> </tr>
+  <tr> <td> erdo_network </td> <td align="right"> 1.88 </td> <td align="right"> 0.14 </td> <td align="right"> 0.13 </td> </tr>
    </table>
 <br></br>
 

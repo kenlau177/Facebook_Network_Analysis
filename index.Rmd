@@ -11,7 +11,7 @@ bibliography: bibfile.bib
 ---
 
 ## Introduction
-This project explores my own friendship network. This is also the first time I'm performing an empirical network analysis, so I decided to start with analyzing something I'm more familiar with. What is more, this could possibly act as a tutorial for anyone wanting to do a similar analysis. I also carried out an analysis between a few anomalyzed ego networks from stanford's database. 
+This project explores my facebook friend network. I hope this report provides a guide for anyone also interested in carrying out their own friend network analysis. Furthermore, I carried out an analysis between a few anomalyzed ego networks from stanford's database. 
 
 ## Obtaining Data
 ### Documentation
