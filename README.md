@@ -1,4 +1,4 @@
-Facebook Network Analysis
+Social Network Analysis
 ===============
 
 Social Network Analysis Project on Ego Network Analysis of Facebook Network data.
